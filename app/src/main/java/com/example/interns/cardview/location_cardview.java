@@ -2,16 +2,47 @@ package com.example.interns.cardview;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class location_cardview extends ActionBarActivity {
-
+    private RecyclerView recyclerView;
+    private listLocations_Recyclerview_Adapter adapter;
+    String[]locations;
+    String[]descriptions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_cardview);
+        setContentView(R.layout.recycler_view);
+        locations = getResources().getStringArray(R.array.locations);
+        descriptions = getResources().getStringArray(R.array.descriptions);
+        recyclerView = (RecyclerView) findViewById(R.id.locations_recyclerview);
+        adapter = new listLocations_Recyclerview_Adapter(this,getData());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public List<location> getData(){
+        List<location> data = new ArrayList<>();
+        int icon = R.drawable.pink_trees;
+        String desc = "Description amputa";
+
+        for(int i = 0; i<locations.length;i++){
+            location current = new location();
+            current.name = locations[i];
+            current.icon = icon;
+            current.description = descriptions[i];
+
+            data.add(current);
+        }
+
+        return data;
     }
 
     @Override
